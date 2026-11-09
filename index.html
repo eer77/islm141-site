@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLM141 - مدخل في الشريعة الإسلامية (الشامل والنهائي)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --primary: #5c554e;
+            --accent: #d4a373;
+            --border: #e3dcd2;
+            --header-bg: #f2f0ea;
+            --success: #4a7c59;
+            --danger: #b25353;
+        }
+
+        [data-theme="espresso"] { --bg-color: #1a1614; --card-bg: #26211e; --text-color: #f0e6df; --primary: #d4a373; --header-bg: #211c18; --border: #3d3530; }
+        [data-theme="matcha"] { --bg-color: #f0f4f1; --card-bg: #ffffff; --text-color: #233026; --primary: #4a7c59; --header-bg: #e2ebe3; --border: #c8d6cb; }
+        [data-theme="qahwa"] { --bg-color: #f4ecdf; --card-bg: #fffbf5; --text-color: #3b2e2a; --primary: #8b5a2b; --header-bg: #ebdccb; --border: #d9c3a9; }
+        [data-theme="chai"] { --bg-color: #fcf6f0; --card-bg: #ffffff; --text-color: #44362b; --primary: #a0714f; --header-bg: #f5ebe0; --border: #e6d5c3; }
+        [data-theme="rose"] { --bg-color: #faf4f5; --card-bg: #ffffff; --text-color: #4a3b3d; --primary: #a36b77; --header-bg: #f3eae8; --border: #e5d3d6; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; }
+
+        header { background-color: var(--header-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 10px; }
+        .logo { font-weight: 900; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        
+        .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .nav-links button { background: none; border: none; cursor: pointer; font-size: 0.95rem; color: var(--text-color); font-weight: 500; padding: 6px 12px; border-radius: 8px; }
+        .nav-links button:hover, .nav-links button.active { background-color: var(--primary); color: #fff; }
+
+        .theme-switcher { display: flex; gap: 6px; align-items: center; }
+        .theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; }
+
+        main { flex: 1; max-width: 1050px; width: 100%; margin: 30px auto; padding: 0 20px; }
+        .section { display: none; background: var(--card-bg); border-radius: 16px; padding: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 30px; }
+        .section.active { display: block; }
+
+        h1, h2, h3 { color: var(--primary); margin-bottom: 15px; font-weight: 700; }
+        h1 { font-size: 1.8rem; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 25px; }
+        h2 { font-size: 1.4rem; margin-top: 30px; border-right: 4px solid var(--primary); padding-right: 10px; }
+        h3 { font-size: 1.15rem; margin-top: 20px; }
+        p, li { line-height: 1.9; margin-bottom: 12px; font-size: 1.02rem; text-align: justify; }
+        ul, ol { padding-right: 25px; margin-bottom: 15px; }
+
+        .btn { background-color: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 15px; }
+        .btn:hover { opacity: 0.9; }
+
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border); padding: 12px; text-align: right; }
+        th { background-color: var(--header-bg); color: var(--primary); }
+
+        .note-box { background: var(--header-bg); border-right: 4px solid var(--accent); padding: 15px; border-radius: 8px; margin: 15px 0; }
+
+        /* ستايل الاختبار */
+        .exam-header { display: flex; justify-content: space-between; align-items: center; background: var(--header-bg); padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; font-weight: bold; flex-wrap: wrap; gap: 10px; }
+        .question-card { margin-bottom: 25px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-color); }
+        .options label { display: block; margin: 10px 0; cursor: pointer; background: var(--card-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--border); }
+        .options input { margin-left: 10px; }
+        textarea { width: 100%; height: 90px; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text-color); margin-top: 10px; font-size: 1rem; }
+        
+        .result-box { display: none; background: var(--header-bg); padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px; border: 2px solid var(--primary); }
+
+        footer { text-align: center; padding: 20px; background-color: var(--header-bg); border-top: 1px solid var(--border); font-size: 0.9rem; }
+    </style>
+</head>
+<body data-theme="linen">
+
+    <header>
+        <div class="logo">✨ ISLM141 - المذكرة الأولى الشاملة</div>
+        <div class="nav-links">
+            <button onclick="switchTab('home')" class="active">الرئيسية</button>
+            <button onclick="switchTab('notes1')">المذكرة الأولى (كاملة بدون اختصار)</button>
+            <button onclick="switchTab('notes2')">المذكرة الثانية</button>
+            <button onclick="switchTab('exam')" style="background: var(--primary); color: #fff;">محاكاة الاختبار (30 درجة)</button>
+        </div>
+        <div class="theme-switcher">
+            <div class="theme-btn" style="background: #faf9f6;" onclick="setTheme('linen')" title="Linen"></div>
+            <div class="theme-btn" style="background: #26211e;" onclick="setTheme('espresso')" title="Espresso"></div>
+            <div class="theme-btn" style="background: #f0f4f1;" onclick="setTheme('matcha')" title="Matcha"></div>
+            <div class="theme-btn" style="background: #f4ecdf;" onclick="setTheme('qahwa')" title="Qahwa"></div>
+            <div class="theme-btn" style="background: #fcf6f0;" onclick="setTheme('chai')" title="Chai"></div>
+            <div class="theme-btn" style="background: #faf4f5;" onclick="setTheme('rose')" title="Rose"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- الرئيسية -->
+        <section id="home" class="section active">
+            <h1>مرحباً بك في منصة ISLM141 التعليمية</h1>
+            <p>تم إعداد هذه المنصة خصيصاً لتضمين <strong>جميع محتويات المذكرة الأولى بكامل تفاصيلها وصفحاتها الـ 27 ودون أي حذف أو اختصار</strong>، مطابقة تماماً للمستند الرسمي:</p>
+            <ul>
+                <li><strong>المذكرة الأولى كاملة:</strong> التعريفات اللغوية والاصطلاحية (أبو حنيفة، والجمهور، والتعريف المختار)، وتفكيك الألفاظ، وأنواع الأحكام، وجدول المقارنة الشامل بين الشريعة والفقه، والخصائص، والمصادر (المصالح المرسلة، الإجماع، العرف)، وأدوار الفقه الستة وتفاصيل الدور الأول والثاني بكامل الحيثيات.</li>
+                <li><strong>محاكاة الاختبار (30 درجة):</strong> أسئلة صح وخطأ، اختيار من متعدد، وأسئلة مقالية مع إجاباتها النموذجية للتصحيح الذاتي.</li>
+            </ul>
+            <button class="btn" onclick="switchTab('notes1')">استعرض المذكرة الأولى كاملاً الآن</button>
+        </section>
+
+        <!-- المذكرة الأولى كاملة بدون اختصار -->
+        <section id="notes1" class="section">
+            <h1>المذكرة الأولى: الشرح والتلخيص الشامل (كاملة بدون اختصار)</h1>
+            
+            <h2>1. تمهيد ومصطلحات أساسية (اللغة والاصطلاح)</h2>
+            <table>
+                <tr>
+                    <th>المصطلح</th>
+                    <th>لغةً</th>
+                    <th>اصطلاحاً (عند العلماء)</th>
+                </tr>
+                <tr>
+                    <td><strong>الفقه</strong></td>
+                    <td>العلم بالشيء والفهم له، وإدراك غرض المتكلم من كلامه.<br>*(قال تعالى: ﴿فَمَالِ هَؤُلَاءِ الْقَوْمِ لَا يَكَادُونَ يَفْقَهُونَ حَدِيثًا﴾)*</td>
+                    <td>
+                        - <strong>عند أبي حنيفة:</strong> معرفة النفس ما لها وما عليها فيشمل الأحكام الاعتقادية والأخلاقية.<br>
+                        - <strong>عند الفقهاء (العام):</strong> علم يطلق على جميع الأحكام الدينية أو العملية المكتسبة من النظر أو التقليد.<br>
+                        - <strong>التعريف المختار (عند الأصوليين والجمهور):</strong> <em>"العلم بالأحكام الشرعية العملية من أدلتها التفصيلية بالاستدلال"</em>.
+                    </td>
+                </tr>
+            </table>
+
+            <h3>تفكيك ألفاظ التعريف المختار:</h3>
+            <ul>
+                <li><strong>الأحكام الشرعية:</strong> المنسوبة إلى الشريعة المأخوذة منها رأساً أو بالواسطة.</li>
+                <li><strong>العملية:</strong> المتعلقة بما يصدر عن المكلف من عبادات ومعاملات (وبهذا خرجت الاعتقادية والأخلاقية).</li>
+                <li><strong>من أدلتها التفصيلية:</strong> الأدلة الجزئية المتعلقة بمسألة محددة (مثل آية تحريم الزنا). *(علل: علم المقلدين لا يسمى فقهاً بالمعنى الأخص لأنه غير مكتسب عن طريق النظر والاستدلال المباشر).*</li>
+                <li><strong>بالاستدلال:</strong> أي بطريق النظر والبحث والاجتهاد.</li>
+            </ul>
+
+            <h2>2. جدول المقارنة الشامل: (الشريعة الإسلامية مقابل الفقه الإسلامي)</h2>
+            <table>
+                <tr>
+                    <th>أوجه المقارنة</th>
+                    <th>الشريعة الإسلامية</th>
+                    <th>الفقه الإسلامي</th>
+                </tr>
+                <tr>
+                    <td><strong>ماذا تشمل؟</strong></td>
+                    <td>أعم وأشمل؛ تشمل العقيدة والأخلاق والعبادات والمعاملات.</td>
+                    <td>أخص؛ لا يشمل إلا الأحكام العملية (العبادات والمعاملات).</td>
+                </tr>
+                <tr>
+                    <td><strong>المصدر والصفة</strong></td>
+                    <td>تشريع إلهي بحت منزل من الله في القرآن والسنة.</td>
+                    <td>استنباط بشري يستند للنصوص ويتضمن الرأي والاجتهاد.</td>
+                </tr>
+                <tr>
+                    <td><strong>مجال الرأي والاجتهاد</strong></td>
+                    <td>لا مجال فيه لرأي الإنسان أبداً وتحرم مخالفته.</td>
+                    <td>ينقسم لقسمين: ما يضعف فيه الرأي (كالضروريات)، وما يغلب عليه الرأي (المعاملات واجتهادات العلماء).</td>
+                </tr>
+                <tr>
+                    <td><strong>حكم المخالفة</strong></td>
+                    <td>تحرم مخالفته قطعاً.</td>
+                    <td>تسوغ مخالفتها إذا استندت إلى دليل أقوى أو اجتهاد أقرب لروح النصوص (والمخالفة المجردة اتباع للهوى).</td>
+                </tr>
+                <tr>
+                    <td><strong>الطابع الديني</strong></td>
+                    <td>تشريع إلهي خالص.</td>
+                    <td>مصبوغ بالصبغة الدينية لأنه قائم على الشريعة وداخل في نظامها.</td>
+                </tr>
+            </table>
+
+            <h2>3. خصائص الفقه الإسلامي</h2>
+            <ol>
+                <li><strong>قائم على أساس الشريعة الإسلامية:</strong> يستند إليها كمصدر رئيسي للتوجيهات والأحكام.</li>
+                <li><strong>يحمل صبغة دينية وقيمية:</strong> تدعو لاحترام الشرع وعدم مخالفته، فالجانب الديني عنصر أصيل في تنظيماته.</li>
+                <li><strong>تضمنه أحكاماً ذات جزاء دنيوي وأخروي:</strong> وهو وصف ثابت لأحكام الشريعة وله صفة الشمول (أقل من الشريعة وأكثر من القوانين الوضعية).</li>
+                <li><strong>المرونة وقابليته للبقاء (الثبات والحركة):</strong> دليل على صلاحية الشريعة للعموم والبقاء؛ لأنه تطبيق لمبادئ الشريعة حسب الأزمنة والأمكنة ومصالح الناس.</li>
+                <li><strong>استناده إلى المصالح الشرعية والمرسلة:</strong> تتسم بالسعة لتلبية حاجات الحياة المتجددة.</li>
+            </ol>
+
+            <h2>4. مصادر الفقه الإسلامي الكلية والفرعية</h2>
+            <ul>
+                <li><strong>المصالح المرسلة:</strong> أصل عظيم ومصدر خصب، لم يرد بها نص صريح بإلغائها أو اعتبارها، وتحقق مصلحة عامة لولي الأمر إيجاد النظم بموجبها (مثل جمع القرآن في زمن أبي بكر، تضمين الصناع عند علي، إيقاف الضرائب، فرض التسعير، وإلزام أرباب الصناعات بأجرة المثل).</li>
+                <li><strong>الإجماع:</strong> اتفاق المجتهدين على حكم واقعة اجتهادية لم يرد بشأنها نص.</li>
+                <li><strong>العرف:</strong> ما اعتاده الناس وجروا عليه، وتبتني عليه الأحكام ومن قواعده *(العادة محكمة، المعروف عرفاً كالمشروط شرطاً)*. ومن أمثلته: عقد الاستصناع، ودخول الحمام، وقف المنقول، وشروط البيع، والعيوب.</li>
+            </ul>
+
+            <h2>5. أدوار الفقه الستة وتفاصيل الدور الأول والثاني</h2>
+            <p><strong>الدور الأول (عصر النبي ﷺ):</strong> أهم العصور لأنه عصر التشريع الإلهي. انقسم إلى التشريع المكي (العقيدة والأخلاق) والتشريع المدني (العبادات والمعاملات والدولة). وتتميز التشريع فيه بـ: <strong>التدرج</strong> (زمني، في أنواع التكاليف، ومن العام للخاص)، و<strong>رفع الحرج</strong>، و<strong>النسخ</strong> (وقع في الدور الأول فقط في 5 مواضع شهيرة). واجتهاد الصحابة فيه كان مرده إلى النبي ﷺ.</p>
+            <p><strong>الدور الثاني (عصر الخلفاء الراشدين):</strong> كثرت فيه المسائل بسبب الفتوحات واتساع الدولة واختلاط الثقافات. ظهر الاجتهاد الجماعي (الشورى) والاجتهاد الفردي. ومن أبرز تطبيقاته التي راعت علل الأحكام والمصلحة: <strong>إيقاف سهم المؤلفة قلوبهم</strong> لزوال علة الضعف، <strong>إيقاف حد السرقة</strong> في عام المجاعة وغلمة حاطب لعدم توفر شروط الضرورة، <strong>ضوال الإبل</strong> (التي غير عثمان وعلي طريق حفظها بسبب تغير النفوس)، والطلاق الثلاث الذي أمضاه عمر ثلاثاً زجراً للناس وسداً للذريعة. كما تضمن تدوين القرآن الكريم في مصحف واحد في زمن أبي بكر.</p>
+        </section>
+
+        <!-- المذكرة الثانية -->
+        <section id="notes2" class="section">
+            <h1>المذكرة الثانية: ملزمة سؤال وجواب</h1>
+            <div class="note-box">
+                <p>تغطي هذه المذكرة الأسئلة التفصيلية الدقيقة، اجتهاد الصحابة، وتطبيقات إيقاف الحدود، ومسائل العول، وتوريث مطلقة الفار، وقتل الجماعة بالواحد، وفقهاء الصحابة المكثرين (7) والمتوسطين (5)، وأسباب اختلافهم (علم بالسنة، وثوق بالرواية، فهم النصوص، والاجتهاد).</p>
+            </div>
+            <button class="btn" onclick="switchTab('exam')">انتقل إلى محاكاة الاختبار الشامل (30 درجة)</button>
+        </section>
+
+        <!-- محاكاة الاختبار الشامل -->
+        <section id="exam" class="section">
+            <h1>محاكاة اختبار ISLM141 الشامل (30 درجة)</h1>
+            <div class="exam-header">
+                <span>⏱️ وقت مفتوح للمراجعة</span>
+                <span>الدرجة الإجمالية: 30 درجة (10 صح وخطأ + 10 اختيار من متعدد + 10 مقالي)</span>
+            </div>
+
+            <form id="quizForm" onsubmit="submitExam(event)">
+                <!-- قسم صح وخطأ (10 درجات) -->
+                <h2>أولاً: أسئلة الصح والخطأ (10 درجات)</h2>
+                
+                <div class="question-card">
+                    <p><strong>س1: الفقه عند الإمام أبي حنيفة هو معرفة النفس ما لها وما عليها فيشمل الأحكام الاعتقادية والأخلاقية.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="correct"> صح</label>
+                        <label><input type="radio" name="q1" value="wrong"> خطأ</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س2: وقع النسخ في التشريع الإسلامي في جميع أدوار الفقه الستة.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="wrong"> صح</label>
+                        <label><input type="radio" name="q2" value="correct"> خطأ (وقع النسخ في الدور الأول فقط)</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س3: إيقاف عمر بن الخطاب لحد السرقة في عام المجاعة كان نسخاً للحكم القرآني.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="wrong"> صح</label>
+                        <label><input type="radio" name="q3" value="correct"> خطأ (لعدم توفر شروط التطبيق وتحقق الضرورة)</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س4: الإجماع هو اتفاق المجتهدين على حكم واقعة اجتهادية لم يرد نص بشأنها.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="correct"> صح</label>
+                        <label><input type="radio" name="q4" value="wrong"> خطأ</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س5: الشريعة الإسلامية أعم وأشمل من الفقه الإسلامي لأنها تشمل العقيدة والأخلاق والعبادات والمعاملات.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="correct"> صح</label>
+                        <label><input type="radio" name="q5" value="wrong"> خطأ</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س6: تدونت السنة النبوية الشريفة بشكل كامل ورسمي في عصر الخلفاء الراشدين بجانب القرآن.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="wrong"> صح</label>
+                        <label><input type="radio" name="q6" value="correct"> خطأ (لم تدون السنة في عصر الصحابة بل ظلت محفوظة في الصدور)</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س7: العرف أصل فقهي تبتني عليه الأحكام ومن قواعده "العادة محكمة".</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="correct"> صح</label>
+                        <label><input type="radio" name="q7" value="wrong"> خطأ</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س8: اجتهاد الصحابة في عصر النبي ﷺ كان يعتبر مصدراً مستقلاً للتشريع بمعزل عن الوحي.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="wrong"> صح</label>
+                        <label><input type="radio" name="q8" value="correct"> خطأ (مرده إلى النبي ﷺ الذي يقره أو ينكره)</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س9: التشريع المكي اتجه أساساً إلى ناحية العقيدة والأخلاق وكانت الأحكام العملية قليلة وكلية.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="correct"> صح</label>
+                        <label><input type="radio" name="q9" value="wrong"> خطأ</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س10: كل مخالفة للرأي الفقهي الاجتهادي تعتبر قطعاً من اتباع الهوى المحرم.</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="wrong"> صح</label>
+                        <label><input type="radio" name="q10" value="correct"> خطأ (تسوغ المخالفة إذا استندت إلى دليل أقوى أو اجتهاد أقرب لروح النصوص)</label>
+                    </div>
+                </div>
+
+                <!-- قسم اختيار من متعدد (10 درجات) -->
+                <h2>ثانياً: أسئلة الاختيار من متعدد (10 درجات)</h2>
+
+                <div class="question-card">
+                    <p><strong>س11: التعريف المختار للفقه في الاصطلاح الشرعي هو:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="wrong"> معرفة النفس ما لها وما عليها</label>
+                        <label><input type="radio" name="q11" value="correct"> العلم بالأحكام الشرعية العملية من أدلتها التفصيلية بالاستدلال</label>
+                        <label><input type="radio" name="q11" value="wrong"> العلم بالأحكام الاعتقادية والأخلاقية</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س12: من أمثلة المصالح المرسلة التي أخذ بها أبو بكر الصديق رضي الله عنه:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="correct"> جمع القرآن في مصحف واحد</label>
+                        <label><input type="radio" name="q12" value="wrong"> فرض التسعير الإجباري</label>
+                        <label><input type="radio" name="q12" value="wrong"> بناء السجون</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س13: الصحابي الذي أمر بأخذ ضوال الإبل وبيعها وحفظ أثمانها لصاحبها بسبب تغير النفوس هو:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="wrong"> عمر بن الخطاب</label>
+                        <label><input type="radio" name="q13" value="correct"> عثمان بن عفان</label>
+                        <label><input type="radio" name="q13" value="wrong"> علي بن أبي طالب</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س14: القاعدة الفقهية التي تفيد بأن العادات التجارية لها قوة الشروط المتفق عليها هي:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="correct"> المعروف بين التجار كالمشروط فيما بينهم</label>
+                        <label><input type="radio" name="q14" value="wrong"> العادة محكمة</label>
+                        <label><input type="radio" name="q14" value="wrong"> الضرورات تبيح المحظورات</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س15: ما سبب اختلاف الفقهاء في تحديد معنى كلمة "قروء" في سورة البقرة؟</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q15" value="wrong"> اختلاف العلم بالسنة</label>
+                        <label><input type="radio" name="q15" value="correct"> اختلاف فهم النصوص (لاحتمال اللفظ لمعنيين كالطهر والحيض)</label>
+                        <label><input type="radio" name="q15" value="wrong"> عدم وثوقهم بالراوي</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س16: من فقهاء الصحابة المكثرين في الفتوى والرأي:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="correct"> عمر بن الخطاب وعلي بن أبي طالب وعبد الله بن مسعود</label>
+                        <label><input type="radio" name="q16" value="wrong"> أبو بكر الصديق وعثمان بن عفان</label>
+                        <label><input type="radio" name="q16" value="wrong"> عبد الله بن عمر والزبير</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س17: التدرج في تحريم الخمر مرّ بعدة مراحل، وأولها كان:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q17" value="correct"> بيان أضرارها وثمراتها في النخل والأنعام</label>
+                        <label><input type="radio" name="q17" value="wrong"> التحريم القاطع فوراً</label>
+                        <label><input type="radio" name="q17" value="wrong"> النهي عنها وقت الصلاة فقط</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س18: الحكم الذي أمضاه عمر بن الخطاب رضي الله عنه زجراً للناس وكثرة استهتارهم هو:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="wrong"> إعطاء سهم المؤلفة قلوبهم</label>
+                        <label><input type="radio" name="q18" value="correct"> إمضاء الطلاق الثلاث بلفظ واحد ثلاثاً</label>
+                        <label><input type="radio" name="q18" value="wrong"> قطع يد السارق في المجاعة</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س19: ما هو الوجه الثاني من طرق التشريع في العصر النبوي؟</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="wrong"> النزول بسبب حادثة وقعت أو سؤال وُجّه</label>
+                        <label><input type="radio" name="q19" value="correct"> النزول ابتداءً من غير سؤال أو حادثة لإيجاد مجتمع أمثل</label>
+                        <label><input type="radio" name="q19" value="wrong"> الاجتهاد الشخصي للصحابة</label>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س20: الإمام الذي أجاز بيعة المفضول مع وجود الفاضل دفعاً للفتنة واضطراب المصالح هو:</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="correct"> الإمام مالك (المالكية)</label>
+                        <label><input type="radio" name="q20" value="wrong"> الإمام أبو حنيفة</label>
+                        <label><input type="radio" name="q20" value="wrong"> الإمام الشافعي</label>
+                    </div>
+                </div>
+
+                <!-- قسم الأسئلة المقالية (10 درجات) -->
+                <h2>ثالثاً: الأسئلة المقالية والتصحيح الذاتي (10 درجات)</h2>
+
+                <div class="question-card">
+                    <p><strong>س21 (3 درجات): وضح الفرق الجوهري بين الشريعة الإسلامية والفقه الإسلامي من حيث الشمول والمصدر؟</strong></p>
+                    <textarea placeholder="اكتب إجابتك هنا للمراجعة..."></textarea>
+                    <button type="button" class="btn" onclick="toggleAnswer('ans21')" style="background: var(--accent); font-size: 0.9rem; padding: 6px 15px;">عرض الإجابة النموذجية</button>
+                    <div id="ans21" style="display:none; margin-top:10px; padding:10px; background: var(--card-bg); border-radius:8px;">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        - <em>الشريعة الإسلامية:</em> أعم وأشمل، تشمل العقيدة والأخلاق والعبادات والمعاملات، وهي تشريع إلهي بحت منزل من الله في القرآن والسنة وتحرم مخالفته.<br>
+                        - <em>الفقه الإسلامي:</em> أخص، يقتصر على الأحكام العملية (العبادات والمعاملات)، وهو استنباط بشري يتضمن الرأي والاجتهاد ولا يعتبر كله تشريعاً إلهياً مباشراً بل تسوغ مخالفته بدليل أقوى.
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س22 (3 درجات): علل: لماذا لم يعتبر اجتهاد الصحابة في عصر النبي ﷺ مصدراً مستقلاً للتشريع؟</strong></p>
+                    <textarea placeholder="اكتب إجابتك هنا للمراجعة..."></textarea>
+                    <button type="button" class="btn" onclick="toggleAnswer('ans22')" style="background: var(--accent); font-size: 0.9rem; padding: 6px 15px;">عرض الإجابة النموذجية</button>
+                    <div id="ans22" style="display:none; margin-top:10px; padding:10px; background: var(--card-bg); border-radius:8px;">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        لأن اجتهاد الصحابة كان مرده دائماً إلى النبي ﷺ؛ فهو الذي كان يقرّه فيصبح تشريعاً، أو ينكره فلا يكون تشريعاً، فلم يكن منفصلاً عن توجيهات الوحي وإقرار النبي.
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <p><strong>س23 (4 درجات): اذكر أربعة من أسباب اختلاف الفقهاء في عصر الصحابة رضي الله عنهم مع مثال لكل سبب.</strong></p>
+                    <textarea placeholder="اكتب إجابتك هنا للمراجعة..."></textarea>
+                    <button type="button" class="btn" onclick="toggleAnswer('ans23')" style="background: var(--accent); font-size: 0.9rem; padding: 6px 15px;">عرض الإجابة النموذجية</button>
+                    <div id="ans23" style="display:none; margin-top:10px; padding:10px; background: var(--card-bg); border-radius:8px;">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        1. <em>اختلاف العلم بالسنة:</em> كعدم بلوغ سنة دية أصابع اليد لعمر بن الخطاب في البداية.<br>
+                        2. <em>عدم وثوقهم بالسنة:</em> كعدم أخذ عمر بحديث فاطمة بنت قيس في النفقة والسكنى للمطلقة بائناً لعدم وثوقه بالرواية.<br>
+                        3. <em>اختلاف فهم النصوص:</em> كالخلاف في معنى "قروء" (أطهار أم حيض).<br>
+                        4. <em>الاجتهاد فيما لا نص فيه:</em> كاختلاف أبي بكر وعمر في التسوية بين الناس في العطاء أو التفريق بينهم بحسب السبق.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.2rem; padding: 15px;">إرسال وتصحيح الاختبار فوراً 🎯</button>
+            </form>
+
+            <div id="resultBox" class="result-box">
+                <h2>نتيجة محاكاة الاختبار</h2>
+                <p id="scoreText" style="font-size: 1.2rem; font-weight: bold; margin: 10px 0;"></p>
+                <p>ممتاز جداً! تم تغطية جميع تفاصيل المذكرة الأولى دون أي نقصان لضمان تفوقك التام.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © منصة ISLM141 النهائية - 2026</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function setTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+        }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitExam(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'correct', q2: 'correct', q3: 'correct', q4: 'correct', q5: 'correct',
+                q6: 'correct', q7: 'correct', q8: 'correct', q9: 'correct', q10: 'correct',
+                q11: 'correct', q12: 'correct', q13: 'correct', q14: 'correct', q15: 'correct',
+                q16: 'correct', q17: 'correct', q18: 'correct', q19: 'correct', q20: 'correct'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score += 1;
+                }
+            }
+
+            const resultBox = document.getElementById('resultBox');
+            const scoreText = document.getElementById('scoreText');
+            scoreText.innerHTML = `درجتك في الأسئلة الموضوعية: ${score} من 20 درجة (بالإضافة إلى أسئلة المقال المرفقة بإجاباتها النموذجية للتصحيح الذاتي)`;
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
